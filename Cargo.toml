@@ -1,6 +1,7 @@
 [workspace]
 members = [
-    "delay-server"
+    "delay-server",
+    "raw-syscall",
 ]
 resolver = "3"
 

@@ -7,6 +7,31 @@ This repository is the code complement to the Talk given at Rust SP meetup in Sa
 - [slides link](https://docs.google.com/presentation/d/e/2PACX-1vRL_snOYPRY76nYNLnh1GKNLDqp84Z5flk2BYGPfDr6U3ZLyke6o2iXE23VowBoxKsTaPvQ_PJWcZo9/pub?start=false&loop=false&delayms=60000#slide=id.p)
 
 
-# Packages
+## Packages
 
 - `delay-server`: A simple Http server that delays reponses for 100ms to help test non-blocking behavior in clients.
+- `raw-syscall`: explores the syscalls used to make network requests and to make them non-blocking. (actually uses libc bindings, not raw syscalls)
+
+### Delay Server
+
+Delay server is only used as a counterpart to the code in the other packages. Runs with:
+
+```bash
+cargo run -p delay-server
+```
+
+### Raw Syscall
+
+```bash
+cargo run -p raw-syscall -- <command>
+```
+
+Where `<command>` is one of:
+- `seq-calls`: Make TCP calls sequentially using blocking syscalls.
+- `non-blocking-select`: Make TCP calls using non-blocking sockets and select().
+- `non-blocking-poll`: Make TCP calls using non-blocking sockets and poll().
+- `non-blocking-epoll`: Make TCP calls using non-blocking sockets and epoll().
+- `std-seq-calls`: Make TCP calls sequentially using Rust std library.
+- `std-non-blocking-calls`: Make TCP calls using non-blocking sockets and std library.
+- `mio-non-blocking-calls`: Make TCP calls using non-blocking sockets and mio crate.
+

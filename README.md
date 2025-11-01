@@ -11,6 +11,7 @@ This repository is the code complement to the Talk given at Rust SP meetup in Sa
 
 - `delay-server`: A simple Http server that delays reponses for 100ms to help test non-blocking behavior in clients.
 - `raw-syscall`: explores the syscalls used to make network requests and to make them non-blocking. (actually uses libc bindings, not raw syscalls)
+- `manual-futures`: implements several simple runtimes using manual futures to understand how async/await works under the hood.
 
 ### Delay Server
 
@@ -21,6 +22,8 @@ cargo run -p delay-server
 ```
 
 ### Raw Syscall
+
+This package contains several implementations of making TCP requests using different techniques, from blocking syscalls to non-blocking syscalls with different multiplexing strategies, to Rust std library and mio crate.
 
 ```bash
 cargo run -p raw-syscall -- <command>
@@ -35,3 +38,17 @@ Where `<command>` is one of:
 - `std-non-blocking-calls`: Make TCP calls using non-blocking sockets and std library.
 - `mio-non-blocking-calls`: Make TCP calls using non-blocking sockets and mio crate.
 
+### Manual futures
+
+```bash
+cargo run -p manual-futures -- <command>
+```
+
+Where `<command>` is one of:
+- `naive-executor`: Polls future to completion in a loop.
+- `epoll-executor`: Uses epoll to wait for readiness before polling futures again.
+- `futures-executor`: Uses the futures crate executor to run our own futures as proof they work.
+- `waker-executor`: Uses a custom waker and reactor to drive the futures to completion.
+
+
+ 

@@ -2,6 +2,7 @@
 members = [
     "delay-server",
     "raw-syscall",
+    "manual-futures",
 ]
 resolver = "3"
 

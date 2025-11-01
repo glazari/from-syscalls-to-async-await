@@ -1,0 +1,9 @@
+[package]
+name = "manual-futures"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+anyhow = { version = "1.0.100", features = ["backtrace"] }
+futures = "0.3.31"
+mio = { version = "1.0.4", features = ["os-poll", "net"] }

@@ -54,7 +54,6 @@ pub type nfds_t = u64;
 // epoll
 // --------------------------------------------------
 
-
 // op values for epoll_ctl
 pub const EPOLL_CTL_ADD: i32 = 1;
 pub const EPOLL_CTL_DEL: i32 = 2;

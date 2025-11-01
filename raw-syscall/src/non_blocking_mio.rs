@@ -37,7 +37,11 @@ pub fn non_blocking_calls() -> Result<(), anyhow::Error> {
     Ok(())
 }
 
-fn read_all_non_blocking(streams: &mut [TcpStream], poll: &mut Poll, events: &mut Events) -> Result<Vec<Vec<u8>>, anyhow::Error> {
+fn read_all_non_blocking(
+    streams: &mut [TcpStream],
+    poll: &mut Poll,
+    events: &mut Events,
+) -> Result<Vec<Vec<u8>>, anyhow::Error> {
     let mut responses = vec![Vec::new(); streams.len()];
     let mut done = vec![false; streams.len()];
     let timeout = std::time::Duration::from_secs(5);
@@ -58,12 +62,11 @@ fn read_all_non_blocking(streams: &mut [TcpStream], poll: &mut Poll, events: &mu
                 continue;
             }
 
-            if  event.is_readable()  {
+            if event.is_readable() {
                 let closed = read_until_would_block(&mut streams[i], &mut responses[i]).unwrap();
                 if closed {
                     done[i] = true;
                     poll.registry().deregister(&mut streams[i])?;
-
                 }
             } else if event.is_read_closed() {
                 done[i] = true;

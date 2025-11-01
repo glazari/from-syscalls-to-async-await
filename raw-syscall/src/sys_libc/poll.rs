@@ -1,5 +1,5 @@
-use super::{SocketFd, PollFd};
 use super::libc::pollfd;
+use super::{PollFd, SocketFd};
 
 pub fn poll(fds: &mut [PollFd], timeout: i32) -> Result<i32, anyhow::Error> {
     let nfds = fds.len() as super::libc::nfds_t;

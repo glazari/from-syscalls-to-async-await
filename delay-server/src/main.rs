@@ -2,9 +2,12 @@
 //!
 //! Minimal Axum server: GET / sleeps 100ms then responds "hello".
 
-use axum::{routing::get, Router};
+use axum::{Router, routing::get};
 use std::net::SocketAddr;
-use tokio::{net::TcpListener, time::{sleep, Duration}};
+use tokio::{
+    net::TcpListener,
+    time::{Duration, sleep},
+};
 
 async fn root() -> &'static str {
     println!("Received request, sleeping for 100ms...");

@@ -1,5 +1,5 @@
+use super::{SocketFd, libc};
 use crate::cyan;
-use super::{libc, SocketFd};
 
 pub fn send(sockfd: &SocketFd, buf: &[u8]) -> Result<Option<usize>, anyhow::Error> {
     let bytes_sent = unsafe { libc::send(sockfd.0, buf.as_ptr(), buf.len(), 0) };

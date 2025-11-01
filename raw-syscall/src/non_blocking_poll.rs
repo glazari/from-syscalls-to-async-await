@@ -1,6 +1,6 @@
-use crate::{cyan, green};
 use crate::sys_libc::libc::{POLLERR, POLLHUP, POLLIN, POLLNVAL, POLLOUT};
 use crate::sys_libc::{self, PollFd, SocketFd};
+use crate::{cyan, green};
 
 pub fn non_blocking_calls() -> Result<(), anyhow::Error> {
     let start = std::time::Instant::now();

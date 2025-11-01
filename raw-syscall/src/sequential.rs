@@ -1,4 +1,7 @@
-use crate::{green, sys_libc::{self, SocketFd}};
+use crate::{
+    green,
+    sys_libc::{self, SocketFd},
+};
 
 pub fn sequential_calls() -> Result<(), anyhow::Error> {
     let start = std::time::Instant::now();

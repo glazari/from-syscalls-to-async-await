@@ -1,10 +1,18 @@
 use super::{FdSet, libc};
 
-pub fn select_write(nfds: i32, writefds: &mut FdSet, timeout: Option<&mut u8>) -> Result<i32, anyhow::Error> {
+pub fn select_write(
+    nfds: i32,
+    writefds: &mut FdSet,
+    timeout: Option<&mut u8>,
+) -> Result<i32, anyhow::Error> {
     select(nfds, None, Some(writefds), None, timeout)
 }
 
-pub fn select_read(nfds: i32, readfds: &mut FdSet, timeout: Option<&mut u8>) -> Result<i32, anyhow::Error> {
+pub fn select_read(
+    nfds: i32,
+    readfds: &mut FdSet,
+    timeout: Option<&mut u8>,
+) -> Result<i32, anyhow::Error> {
     select(nfds, Some(readfds), None, None, timeout)
 }
 

@@ -49,6 +49,7 @@ Where `<command>` is one of:
 - `epoll-executor`: Uses epoll to wait for readiness before polling futures again.
 - `futures-executor`: Uses the futures crate executor to run our own futures as proof they work.
 - `waker-executor`: Uses a custom waker and reactor to drive the futures to completion.
+- `tokio-future`: Run a tokio futures based async function using our waker-executor. (requires starting tokio so that it's reactor starts)
 
 
  

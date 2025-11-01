@@ -1,5 +1,9 @@
 use std::thread;
 
+use tokio::io::AsyncReadExt;
+use tokio::io::AsyncWriteExt;
+use tokio::net::TcpStream;
+
 mod connect;
 mod connect_mio;
 mod epoll_executor;
@@ -59,6 +63,14 @@ fn main() {
             thread::sleep(std::time::Duration::from_millis(100)); // Give the reactor some time to start
             waker_executor::block_on(async_main_waker());
         }
+        "tokio-future" => {
+            // Creates a Tokio runtime so that we initialize tokio's reactor
+            let rt = tokio::runtime::Runtime::new().unwrap();
+            let _guard = rt.enter(); // Enter the runtime context (this is checked by Tokio)
+
+            // use our waker executor to run a tokio future
+            waker_executor::block_on(tokio_async_main());
+        }
         _ => help(),
     }
 }
@@ -92,6 +104,18 @@ async fn async_main_waker() {
     println!("Request sent (waker)");
     let response = waker_receive::receive_async(&mut stream).await;
     println!("Response received (waker)");
+    let response_str = String::from_utf8_lossy(&response);
+    println!("Response:\n{}", response_str);
+}
+
+async fn tokio_async_main() {
+    let mut stream = TcpStream::connect("127.0.0.1:3000").await.unwrap();
+    println!("Connected to server (tokio-future)");
+    stream.write_all(REQUEST.as_bytes()).await.unwrap();
+    println!("Request sent (tokio-future)");
+    let mut response = Vec::new();
+    stream.read_to_end(&mut response).await.unwrap();
+    println!("Response received (tokio-future)");
     let response_str = String::from_utf8_lossy(&response);
     println!("Response:\n{}", response_str);
 }
